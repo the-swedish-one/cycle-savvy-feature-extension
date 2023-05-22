@@ -66,7 +66,13 @@ INSERT INTO symptoms (symptom_name) VALUES
   ('Abdominal cramps or mild pelvic pain'),
   ('Food cravings or changes in appetite'),
   ('Acne breakouts or changes in skin'),
-  ('Nausea or digestive issues (e.g., bloating, constipation, or diarrhea)');`;
+  ('Nausea or digestive issues (e.g., bloating, constipation, or diarrhea)');
+
+  INSERT INTO days (day_of_cycle) VALUES
+  (1), (2), (3), (4), (5), (6), (7), (8), (9), (10),
+  (11), (12), (13), (14), (15), (16), (17), (18), (19), (20),
+  (21), (22), (23), (24), (25), (26), (27), (28);
+`;
 
   con.query(sql, function (err, result) {
     if (err) throw err;
