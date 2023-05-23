@@ -12,16 +12,20 @@ router.get('/', async function (req, res, next) {
   }
 });
 
-//GET symptoms per specific day_of_cycle
-router.get('/:day', async function (req, res, next) {
+//GET symptom_id's per specific day_of_cycle
+router.get('/days/:day/symptoms', async function (req, res, next) {
 
   try {
-    const results = await db(`SELECT * FROM days_symptoms WHERE day_of_cycle = ${req.params.day};`);
-    res.send(results.data);
+    const results = await db(`SELECT * FROM symptoms AS s LEFT JOIN days_symptoms as ds ON s.id = ds.symptom_id WHERE day_of_cycle = ${req.params.day};`);
+
+   res.send(results.data);
+
   } catch (err) {
     res.status(500).send({ message: err });
   }
 });
+
+
 
 
 
