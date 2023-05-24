@@ -5,7 +5,6 @@ import Home from "./pages/Home";
 import Symptoms from "./pages/Symptoms";
 
 function App() {
-
   return (
     <>
       <nav>
