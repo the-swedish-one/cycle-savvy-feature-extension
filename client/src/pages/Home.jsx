@@ -33,7 +33,9 @@ export default function Home() {
       differenceInMilliseconds / (1000 * 60 * 60 * 24)
     );
     setDifferenceInDays(differenceInDays);
-    showSymptoms(differenceInDays);
+    setTimeout(() => {
+      showSymptoms(differenceInDays);
+    }, 3000);
   };
 
   const showSymptoms = async (day) => {
@@ -67,7 +69,9 @@ export default function Home() {
             onChange={handleChange}
             className="form-control-sm"
           />
-          <button type="submit">Submit</button>
+          <button type="submit" className="btn">
+            Submit
+          </button>
         </div>
       </form>
 
@@ -85,8 +89,6 @@ export default function Home() {
             <div key={symptom.id}>{symptom["symptom_name"]}</div>
           ))}
       </div>
-
-      <button className="btn">Submit</button>
     </>
   );
 }
