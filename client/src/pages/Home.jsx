@@ -3,6 +3,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import "../App.css";
 import Symptoms from "./Symptoms";
 import { Button } from "@mui/material";
+// import { DateCalendar } from "@mui/x-date-pickers";
 
 export default function Home() {
   const [cycleStartDate, setCycleStartDate] = useState("");
@@ -15,7 +16,7 @@ export default function Home() {
   useEffect(() => {
     const getCurrentDate = () => {
       const today = new Date();
-      setCurrentDate(today.toLocaleString().substring(0, 10));
+      setCurrentDate(today.toString().substring(0, 15));
     };
 
     getCurrentDate();
@@ -58,35 +59,37 @@ export default function Home() {
 
   return (
     <>
-      <h1>Hello</h1>
-      <h3>Current Date: {currentDate}</h3>
+      <h1>Welcome, User!</h1>
+      <h5 className="todayDate">Today is {currentDate}</h5>
 
       <form onSubmit={calculateDifference} className="formContainer">
-        <label className="form-label">
-          What is the date of the start of your current cycle?{" "}
-        </label>
-        <div>
+        <h4 className="form-label">
+          Please select the start date of your current cycle
+        </h4>
+        <div className="containerInputAndButton">
           <input
             type="date"
             value={cycleStartDate}
             onChange={handleChange}
             className="form-control-sm"
           />
-          <button type="submit" className="btn">
-            Submit
-          </button>
+          <div className="btnContainer">
+            <button type="submit" className="btn">
+              Submit
+            </button>
+          </div>
         </div>
       </form>
 
-      <h3>Your current cycle started on {cycleStartDate}</h3>
       {differenceInDays !== null && (
-        <div>
+        <div className="resultContainer">
+          {/* <h3>Your current cycle started on {cycleStartDate}</h3> */}
           <h3>You are currently on day {differenceInDays} of your cycle</h3>
-          <h4>Here are the symptoms you may experience today:</h4>
+          <h4>And here are the symptoms you may experience today:</h4>
         </div>
       )}
 
-      <div>
+      <div className="containerSymptomsOrLoading">
         {isLoading ? (
           <div className="typewriter">
             <div className="slide">
@@ -96,10 +99,13 @@ export default function Home() {
             <div className="keyboard"></div>
           </div>
         ) : (
-          symptoms &&
-          symptoms.map((symptom) => (
-            <div key={symptom.id}>{symptom["symptom_name"]}</div>
-          ))
+          symptoms && (
+            <ul className="symptomsContainer">
+              {symptoms.map((symptom) => (
+                <li key={symptom.id} className="symptomListItem">{symptom["symptom_name"]}</li>
+              ))}
+            </ul>
+          )
         )}
       </div>
     </>

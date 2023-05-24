@@ -14,16 +14,50 @@ body {
 
 /* #895252, #89526f; */
 
+h1 {
+  text-align: center;
+}
+
+.todayDate {
+  text-align: right;
+}
+
+.containerInputAndButton {
+  display: flex;
+  /* justify-content: space-between; */
+}
+
+.btnContainer {
+  margin-left: 10px;
+}
+
 .btn {
   border-radius: 51px;
   background: #89526f;
   box-shadow: 13px 13px 26px #74465e, -13px -13px 26px #9e5e80;
 }
 
-.formContainer {
+.formContainer,
+.resultContainer,
+.containerSymptomsOrLoading {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 1%;
+  padding: 1%;
+  border: 1px solid grey;
+}
+
+.symptomsContainer {
+  /* border: 1px solid grey; */
+}
+
+.symptomListItem {
+  background-color: #6867ac;
+  list-style-type: none;
+  height: 45px;
+  padding: 5px;
+  border-bottom: 1px solid grey;
 }
 
 /* TYPEWRITER CODE */
