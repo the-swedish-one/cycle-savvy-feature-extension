@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "../App.css";
+import Symptoms from "./Symptoms";
+import { Button } from "@mui/material";
 
 export default function Home() {
   const [cycleStartDate, setCycleStartDate] = useState("");
   const [currentDate, setCurrentDate] = useState(null);
   const [differenceInDays, setDifferenceInDays] = useState(null);
   const [error, setError] = useState("");
+  const [symptoms, setSymptoms] = useState(null);
 
   useEffect(() => {
     const getCurrentDate = () => {
@@ -41,12 +44,15 @@ export default function Home() {
       console.log(response);
       const data = await response.json();
       console.log(data);
+      setSymptoms(data);
+      console.log(symptoms);
       if (!response.ok) throw new Error(data.message);
-    }
-    catch (err) {
+    } catch (err) {
       setError(err.message);
     }
   };
+
+  // console.log(symptoms[0]["symptom_name"]);
 
   return (
     <>
@@ -55,7 +61,9 @@ export default function Home() {
       <form onSubmit={calculateDifference}>
         <label>What is the date of the start of your current cycle? </label>
         <input type="date" value={cycleStartDate} onChange={handleChange} />
-        <button>Submit</button>
+        <Button type="submit" variant="contained">
+          Submit
+        </Button>
       </form>
 
       <h3>Your current cycle started on {cycleStartDate}</h3>
@@ -67,6 +75,14 @@ export default function Home() {
           </h4>
         </div>
       )}
+
+      <div>
+       
+        {symptoms &&
+          symptoms.map((symptom) => (
+            <div key={symptom.id}>{symptom["symptom_name"]}</div>
+          ))}
+      </div>
     </>
   );
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
-import Students from "./pages/Students";
+import Symptoms from "./pages/Symptoms";
 
 function App() {
 
@@ -14,16 +14,15 @@ function App() {
             <Link to="/">Home page</Link>
           </li>
           <li>
-            <Link to="/students">Symptoms</Link>
+            <Link to="/symptoms">Symptoms</Link>
           </li>
         </ul>
       </nav>
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/students" element={<Students />} />
+        <Route path="/symptoms" element={<Symptoms />} />
       </Routes>
-
     </>
   );
 }
