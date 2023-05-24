@@ -10,6 +10,7 @@ export default function Home() {
   const [differenceInDays, setDifferenceInDays] = useState(null);
   const [error, setError] = useState("");
   const [symptoms, setSymptoms] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getCurrentDate = () => {
@@ -33,7 +34,9 @@ export default function Home() {
       differenceInMilliseconds / (1000 * 60 * 60 * 24)
     );
     setDifferenceInDays(differenceInDays);
+    setIsLoading(true);
     setTimeout(() => {
+      setIsLoading(false);
       showSymptoms(differenceInDays);
     }, 3000);
   };
@@ -84,10 +87,20 @@ export default function Home() {
       )}
 
       <div>
-        {symptoms &&
+        {isLoading ? (
+          <div className="typewriter">
+            <div className="slide">
+              <i></i>
+            </div>
+            <div className="paper"></div>
+            <div className="keyboard"></div>
+          </div>
+        ) : (
+          symptoms &&
           symptoms.map((symptom) => (
             <div key={symptom.id}>{symptom["symptom_name"]}</div>
-          ))}
+          ))
+        )}
       </div>
     </>
   );
