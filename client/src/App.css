@@ -45,19 +45,21 @@ h1 {
   align-items: center;
   margin-top: 1%;
   padding: 1%;
-  border: 1px solid grey;
-}
-
-.symptomsContainer {
   /* border: 1px solid grey; */
 }
 
+.symptomsContainer {
+  border: 1px solid #d3d4ec;
+  border-radius: 10%;
+  background-color: #526f89;
+  padding: 0;
+}
+
 .symptomListItem {
-  background-color: #6867ac;
   list-style-type: none;
-  height: 45px;
-  padding: 5px;
-  border-bottom: 1px solid grey;
+  padding: 20px;
+  border-bottom: 1px solid #d3d4ec;
+  font-size: 20px;
 }
 
 /* TYPEWRITER CODE */
