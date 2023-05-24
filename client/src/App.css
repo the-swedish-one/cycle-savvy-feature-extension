@@ -1,3 +1,19 @@
 body {
-    /* background-color: #0a0f20; */
+    background-color: #89526f;
+    margin: 2%;
+}
+
+/* #895252 */
+
+.btn {
+  border-radius: 51px;
+background: #89526f;
+box-shadow:  13px 13px 26px #74465e,
+             -13px -13px 26px #9e5e80;
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

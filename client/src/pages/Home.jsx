@@ -20,6 +20,12 @@ export default function Home() {
     getCurrentDate();
   }, []);
 
+  const handleChange = (event) => {
+    const inputDate = event.target.value;
+    console.log(inputDate);
+    setCycleStartDate(inputDate);
+  };
+
   const calculateDifference = (e) => {
     e.preventDefault();
     const differenceInMilliseconds = new Date() - new Date(cycleStartDate);
@@ -27,14 +33,7 @@ export default function Home() {
       differenceInMilliseconds / (1000 * 60 * 60 * 24)
     );
     setDifferenceInDays(differenceInDays);
-  };
-
-  // console.log(differenceInDays)
-
-  const handleChange = (event) => {
-    const inputDate = event.target.value;
-    console.log(inputDate);
-    setCycleStartDate(inputDate);
+    showSymptoms(differenceInDays);
   };
 
   const showSymptoms = async (day) => {
@@ -52,37 +51,42 @@ export default function Home() {
     }
   };
 
-  // console.log(symptoms[0]["symptom_name"]);
-
   return (
     <>
       <h1>Hello</h1>
       <h3>Current Date: {currentDate}</h3>
-      <form onSubmit={calculateDifference}>
-        <label>What is the date of the start of your current cycle? </label>
-        <input type="date" value={cycleStartDate} onChange={handleChange} />
-        <Button type="submit" variant="contained">
-          Submit
-        </Button>
+
+      <form onSubmit={calculateDifference} className="formContainer">
+        <label className="form-label">
+          What is the date of the start of your current cycle?{" "}
+        </label>
+        <div>
+          <input
+            type="date"
+            value={cycleStartDate}
+            onChange={handleChange}
+            className="form-control-sm"
+          />
+          <button type="submit">Submit</button>
+        </div>
       </form>
 
       <h3>Your current cycle started on {cycleStartDate}</h3>
       {differenceInDays !== null && (
         <div>
           <h3>You are currently on day {differenceInDays} of your cycle</h3>
-          <h4 onClick={() => showSymptoms(differenceInDays)}>
-            Here are the symptoms you may experience today:
-          </h4>
+          <h4>Here are the symptoms you may experience today:</h4>
         </div>
       )}
 
       <div>
-       
         {symptoms &&
           symptoms.map((symptom) => (
             <div key={symptom.id}>{symptom["symptom_name"]}</div>
           ))}
       </div>
+
+      <button className="btn">Submit</button>
     </>
   );
 }
