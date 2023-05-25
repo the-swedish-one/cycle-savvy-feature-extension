@@ -42,10 +42,13 @@ h4 {
 }
 
 .btn {
+  margin-right: 7%;
   border-radius: 50px;
   background: linear-gradient(145deg, #b96f9e, #dc84bc);
   box-shadow: 7px 7px 14px #734563, -7px -7px 14px #ffb1fd;
   font-weight: bold;
+  padding: 10px;
+  min-width: 100px;
 }
 
 .formContainer,
