@@ -67,7 +67,7 @@ export default function Home() {
     <>
       <div className="heroContainer">
         <h1>Welcome, User!</h1>
-        <h5 className="todayDate">Today is {currentDate}</h5>
+        {/* <h5 className="todayDate">Today is {currentDate}</h5> */}
 
         <form onSubmit={calculateDifference} className="formContainer">
           <h4 className="form-label">
@@ -80,7 +80,6 @@ export default function Home() {
                 <DateCalendar
                   value={cycleStartDate}
                   onChange={handleChange}
-                  className="form-control-sm"
                 />
               </LocalizationProvider>
               {/* <input
@@ -89,11 +88,9 @@ export default function Home() {
             onChange={handleChange}
             className="form-control-sm"
           /> */}
-              <div className="btnContainer">
-                <button type="submit" className="btn">
-                  Apply
-                </button>
-              </div>
+              <button type="submit" className="btn">
+                Apply
+              </button>
             </div>
           </CardComponent>
         </form>

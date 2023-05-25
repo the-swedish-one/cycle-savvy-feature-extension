@@ -7,6 +7,7 @@ import Symptoms from "./pages/Symptoms";
 function App() {
   return (
     <>
+
       <nav>
         <ul>
           <li>
