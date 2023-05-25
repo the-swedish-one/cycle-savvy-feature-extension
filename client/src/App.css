@@ -20,11 +20,11 @@ h1 {
 .heroContainer {
   background-color: #6867ac;
   padding: 1%;
-  color: #FFE6F7;
+  color: #ffe6f7;
 }
 
 h4 {
-  color: #FFE6F7;
+  color: #ffe6f7;
 }
 
 .todayDate {
@@ -35,6 +35,10 @@ h4 {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+}
+
+.MuiPickersSlideTransition-root {
+  min-height: 195px !important;
 }
 
 .btn {
@@ -57,16 +61,19 @@ h4 {
 
 .symptomsContainer {
   border: 1px solid #d3d4ec;
-  border-radius: 10%;
+  border-radius: 50px;
   background-color: #526f89;
-  padding: 0;
+  padding: 10px;
+  min-width: 500px;
+  margin: 0%;
 }
 
 .symptomListItem {
   list-style-type: none;
-  padding: 20px;
+  padding: 15px;
   border-bottom: 1px solid #d3d4ec;
-  font-size: 20px;
+  font-size: 16px;
+  color: #ffe6f7;
 }
 
 /* .symptomListItem:nth-last-of-type(2n-1) {
@@ -79,8 +86,18 @@ h4 {
 
 .containerSymptomsAndTips {
   display: flex;
-  justify-content: flex-start;
-  border: 1px solid black;
+  justify-content: space-around;
+  padding: 15px;
+  width: 100%;
+}
+
+.tipsContainer {
+  border: 1px solid #d3d4ec;
+  border-radius: 50px;
+  background-color: #526f89;
+  color: #ffe6f7;
+  min-width: 500px;
+  padding: 20px;
 }
 
 /* TYPEWRITER CODE */
