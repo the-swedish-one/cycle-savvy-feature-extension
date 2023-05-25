@@ -77,10 +77,7 @@ export default function Home() {
           <CardComponent logevent={foo}>
             <div className="containerInputAndButton">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateCalendar
-                  value={cycleStartDate}
-                  onChange={handleChange}
-                />
+                <DateCalendar value={cycleStartDate} onChange={handleChange} />
               </LocalizationProvider>
               {/* <input
             type="date"
@@ -115,13 +112,19 @@ export default function Home() {
           </div>
         ) : (
           symptoms && (
-            <ul className="symptomsContainer">
-              {symptoms.map((symptom) => (
-                <li key={symptom.id} className="symptomListItem">
-                  {symptom["symptom_name"]}
-                </li>
-              ))}
-            </ul>
+            <section className="containerSymptomsAndTips">
+              <ul className="symptomsContainer">
+                {symptoms.map((symptom) => (
+                  <li key={symptom.id} className="symptomListItem">
+                    {symptom["symptom_name"]}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="tipsContainer">
+                Self-care tips and Partner-support tips
+              </div>
+            </section>
           )
         )}
       </div>

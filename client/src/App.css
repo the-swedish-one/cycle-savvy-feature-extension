@@ -77,6 +77,12 @@ h4 {
   border-bottom: none;
 }
 
+.containerSymptomsAndTips {
+  display: flex;
+  justify-content: flex-start;
+  border: 1px solid black;
+}
+
 /* TYPEWRITER CODE */
 .typewriter {
   --blue: #5c86ff;
