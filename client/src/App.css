@@ -1,21 +1,27 @@
 body {
-  background-color: #89526f;
-  /* background-image: url(../Moon.svg); */
-  /* background-repeat: no-repeat;
+  background-color: #ffbcd1;
+  /* background-image: url(../bg.jpg);
+  background-repeat: no-repeat;
   background-size: cover;
   min-height: 100vh;
   background-position: center; */
-  margin: 2%;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
 * {
-  color: #d3d4ec;
+  color: #374259;
 }
 
 /* #895252, #89526f; */
 
 h1 {
   text-align: center;
+}
+
+.heroContainer {
+  background-color: #6867ac;
+  padding: 1%;
 }
 
 .todayDate {
@@ -33,9 +39,10 @@ h1 {
 }
 
 .btn {
-  border-radius: 51px;
-  background: #89526f;
-  box-shadow: 13px 13px 26px #74465e, -13px -13px 26px #9e5e80;
+  border-radius: 50px;
+  background: linear-gradient(145deg, #b96f9e, #dc84bc);
+  box-shadow: 7px 7px 14px #734563, -7px -7px 14px #ffb1fd;
+  font-weight: bold;
 }
 
 .formContainer,

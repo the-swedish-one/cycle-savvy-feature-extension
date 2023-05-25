@@ -9,7 +9,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import CardComponent from "../components/CardComponent";
 
 const dayjs = new AdapterDayjs();
-  const foo = () => console.log("bla");
+const foo = () => console.log("bla");
 
 export default function Home() {
   const [cycleStartDate, setCycleStartDate] = useState(dayjs.dayjs(new Date()));
@@ -65,40 +65,39 @@ export default function Home() {
 
   return (
     <>
-      <h1>Welcome, User!</h1>
-      <h5 className="todayDate">Today is {currentDate}</h5>
+      <div className="heroContainer">
+        <h1>Welcome, User!</h1>
+        <h5 className="todayDate">Today is {currentDate}</h5>
 
+        <form onSubmit={calculateDifference} className="formContainer">
+          <h4 className="form-label">
+            Please select the start date of your current cycle
+          </h4>
 
-
-
-      <form onSubmit={calculateDifference} className="formContainer">
-        <h4 className="form-label">
-          Please select the start date of your current cycle
-        </h4>
-
-        <CardComponent logevent={foo}>
-        <div className="containerInputAndButton">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar
-              value={cycleStartDate}
-              onChange={handleChange}
-              className="form-control-sm"
-            />
-          </LocalizationProvider>
-          {/* <input
+          <CardComponent logevent={foo}>
+            <div className="containerInputAndButton">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateCalendar
+                  value={cycleStartDate}
+                  onChange={handleChange}
+                  className="form-control-sm"
+                />
+              </LocalizationProvider>
+              {/* <input
             type="date"
             value={cycleStartDate}
             onChange={handleChange}
             className="form-control-sm"
           /> */}
-          <div className="btnContainer">
-            <button type="submit" className="btn">
-              Apply
-            </button>
-          </div>
-        </div>
-        </CardComponent>
-      </form>
+              <div className="btnContainer">
+                <button type="submit" className="btn">
+                  Apply
+                </button>
+              </div>
+            </div>
+          </CardComponent>
+        </form>
+      </div>
 
       {differenceInDays !== null && (
         <div className="resultContainer">
