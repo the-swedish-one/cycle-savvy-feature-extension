@@ -68,14 +68,15 @@ export default function Home() {
       <h1>Welcome, User!</h1>
       <h5 className="todayDate">Today is {currentDate}</h5>
 
-      <CardComponent logevent={foo}>
-        <button>testareeno</button>
-      </CardComponent>
+
+
 
       <form onSubmit={calculateDifference} className="formContainer">
         <h4 className="form-label">
           Please select the start date of your current cycle
         </h4>
+
+        <CardComponent logevent={foo}>
         <div className="containerInputAndButton">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateCalendar
@@ -92,10 +93,11 @@ export default function Home() {
           /> */}
           <div className="btnContainer">
             <button type="submit" className="btn">
-              Submit
+              Apply
             </button>
           </div>
         </div>
+        </CardComponent>
       </form>
 
       {differenceInDays !== null && (

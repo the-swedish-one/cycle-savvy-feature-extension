@@ -24,11 +24,12 @@ h1 {
 
 .containerInputAndButton {
   display: flex;
-  /* justify-content: space-between; */
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .btnContainer {
-  margin-left: 10px;
+  /* margin-left: 10px; */
 }
 
 .btn {
