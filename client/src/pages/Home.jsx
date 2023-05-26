@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "../App.css";
-import Symptoms from "./Symptoms";
-import { Button } from "@mui/material";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -18,6 +16,7 @@ export default function Home() {
   const [error, setError] = useState("");
   const [symptoms, setSymptoms] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedSymptomForTips, setSelectedSymptomForTips] = useState({});
 
   useEffect(() => {
     const getCurrentDate = () => {
@@ -28,7 +27,7 @@ export default function Home() {
     getCurrentDate();
   }, []);
 
-  console.log({ cycleStartDate: dayjs.toISO(cycleStartDate) });
+  // console.log({ cycleStartDate: dayjs.toISO(cycleStartDate) });
   const handleChange = (value) => {
     // const inputDate = event.target.value;
     // console.log(inputDate);
@@ -51,16 +50,23 @@ export default function Home() {
   const showSymptoms = async (day) => {
     try {
       const response = await fetch(`api/users/days/${day}/symptoms`);
-      // console.log("line 40");
-      console.log(response);
+      // console.log(response);
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       setSymptoms(data);
       console.log(symptoms);
       if (!response.ok) throw new Error(data.message);
     } catch (err) {
       setError(err.message);
     }
+  };
+
+  const showTips = (id) => {
+    console.log(id);
+    const selectedSymptom = symptoms.filter(symptom => symptom.id === id);
+    setSelectedSymptomForTips(selectedSymptom);
+    console.log(symptoms);
+    console.log(selectedSymptom);
   };
 
   return (
@@ -79,12 +85,6 @@ export default function Home() {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateCalendar value={cycleStartDate} onChange={handleChange} />
               </LocalizationProvider>
-              {/* <input
-            type="date"
-            value={cycleStartDate}
-            onChange={handleChange}
-            className="form-control-sm"
-          /> */}
               <button type="submit" className="btn">
                 Apply
               </button>
@@ -115,7 +115,11 @@ export default function Home() {
             <section className="containerSymptomsAndTips">
               <ul className="symptomsContainer">
                 {symptoms.map((symptom) => (
-                  <li key={symptom.id} className="symptomListItem">
+                  <li
+                    key={symptom.id}
+                    onClick={() => showTips(symptom.id)}
+                    className="symptomListItem"
+                  >
                     {symptom["symptom_name"]}
                   </li>
                 ))}
