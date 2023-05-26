@@ -52,10 +52,12 @@ export default function Home() {
 
   const showSymptoms = async (day) => {
     try {
-      const response = await fetch(`api/users/days/${day}/symptoms`);
+      const response = await fetch(
+        `api/users/days/${Math.round((day * 28) / cycleLength)}/symptoms`
+      );
       // console.log(response);
       const data = await response.json();
-      // console.log(data);
+      console.log(Math.round((day * 28) / cycleLength));
       setSymptoms(data);
       // console.log(symptoms);
       if (!response.ok) throw new Error(data.message);
@@ -65,7 +67,7 @@ export default function Home() {
   };
 
   const showTips = (id) => {
-    console.log(id);
+    // console.log(id);
     const selectedSymptom = symptoms.filter((symptom) => symptom.id === id);
     setSelectedSymptomForTips(selectedSymptom[0]);
     // console.log(symptoms);
