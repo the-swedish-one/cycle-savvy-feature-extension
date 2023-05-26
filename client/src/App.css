@@ -1,3 +1,11 @@
+.navbar {
+  background-color: #6867ac;
+}
+
+.navbarUL {
+  list-style-type: none;
+}
+
 body {
   background-color: #ffbcd1;
   /* background-image: url(../bg.jpg);
@@ -37,6 +45,20 @@ h1 {
 
 .formContainer {
   flex: 1;
+  /* max-width: 600px; */
+}
+
+.containerInputCycleLength {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.cycleLengthInput{
+  border-radius: 50px;
+  border: none;
+  margin-bottom: 3%;
 }
 
 .containerInputAndButton {
@@ -48,12 +70,6 @@ h1 {
 h4 {
   color: #ffe6f7;
 }
-
-/* .todayDate {
-  text-align: right;
-} */
-
-
 
 .MuiPickersSlideTransition-root {
   min-height: 195px !important;

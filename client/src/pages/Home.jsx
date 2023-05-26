@@ -67,12 +67,8 @@ export default function Home() {
   };
 
   const showTips = (id) => {
-    // console.log(id);
     const selectedSymptom = symptoms.filter((symptom) => symptom.id === id);
     setSelectedSymptomForTips(selectedSymptom[0]);
-    // console.log(symptoms);
-    // console.log(selectedSymptom);
-    // console.log(selectedSymptomForTips);
   };
 
   return (
@@ -84,19 +80,22 @@ export default function Home() {
 
         <form onSubmit={calculateDifference} className="formContainer">
           <CardComponent>
-            <h5 className="form-label">
-              What is the average length of your cycle?
-            </h5>
-            <input
-              type="number"
-              value={cycleLength}
-              onChange={handleChangeCycleLength}
-              className="form-control-sm"
-            />
-            <h5 className="form-label">
-              What day did your current cycle start? (What was the first day of
-              your last period?)
-            </h5>
+            <div className="containerInputCycleLength">
+              <h5>
+                What is the average length of your cycle (in days)?
+              </h5>
+              <input
+                type="number"
+                placeholder="28"
+                value={cycleLength}
+                onChange={handleChangeCycleLength}
+                className="form-control cycleLengthInput"
+              />
+              <h5>
+                What is the start date of your current cycle?<br/>(What was the first day
+                of your last period?)
+              </h5>
+            </div>
 
             <div className="containerInputAndButton">
               <LocalizationProvider dateAdapter={AdapterDayjs}>

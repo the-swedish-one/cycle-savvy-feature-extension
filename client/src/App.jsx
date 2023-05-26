@@ -7,14 +7,9 @@ import Symptom from "./pages/Symptom";
 function App() {
   return (
     <>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home page</Link>
-          </li>
-          <li>
-            <Link to="/symptoms">Symptoms</Link>
-          </li>
+      <nav className="navbar">
+        <ul className="navbarUL">
+          <li><img src="../CycleSavvyLogoTransparent2.png" alt="" width="200px"/></li>
         </ul>
       </nav>
 
