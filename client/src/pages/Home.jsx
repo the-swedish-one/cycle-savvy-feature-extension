@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
+import Symptom from "./Symptom";
 import "../App.css";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -11,6 +12,7 @@ const foo = () => console.log("bla");
 
 export default function Home() {
   const [cycleStartDate, setCycleStartDate] = useState(dayjs.dayjs(new Date()));
+  const [cycleLength, setCycleLength] = useState(null);
   const [currentDate, setCurrentDate] = useState(null);
   const [differenceInDays, setDifferenceInDays] = useState(null);
   const [error, setError] = useState("");
@@ -27,11 +29,12 @@ export default function Home() {
     getCurrentDate();
   }, []);
 
-  // console.log({ cycleStartDate: dayjs.toISO(cycleStartDate) });
-  const handleChange = (value) => {
-    // const inputDate = event.target.value;
-    // console.log(inputDate);
+  const handleChangeCycleStart = (value) => {
     setCycleStartDate(value);
+  };
+
+  const handleChangeCycleLength = (event) => {
+    setCycleLength(event.target.value);
   };
 
   const calculateDifference = (e) => {
@@ -54,7 +57,7 @@ export default function Home() {
       const data = await response.json();
       // console.log(data);
       setSymptoms(data);
-      console.log(symptoms);
+      // console.log(symptoms);
       if (!response.ok) throw new Error(data.message);
     } catch (err) {
       setError(err.message);
@@ -65,26 +68,40 @@ export default function Home() {
     console.log(id);
     const selectedSymptom = symptoms.filter((symptom) => symptom.id === id);
     setSelectedSymptomForTips(selectedSymptom[0]);
-    console.log(symptoms);
-    console.log(selectedSymptom);
-    console.log(selectedSymptomForTips);
+    // console.log(symptoms);
+    // console.log(selectedSymptom);
+    // console.log(selectedSymptomForTips);
   };
 
   return (
     <>
       <div className="heroContainer">
-        <h1>Welcome, User!</h1>
-        {/* <h5 className="todayDate">Today is {currentDate}</h5> */}
+        <div className="heroText">
+          <h1>Welcome, User!</h1>
+        </div>
 
         <form onSubmit={calculateDifference} className="formContainer">
-          <h4 className="form-label">
-            Please select the start date of your current cycle
-          </h4>
+          <CardComponent>
+            <h5 className="form-label">
+              What is the average length of your cycle?
+            </h5>
+            <input
+              type="number"
+              value={cycleLength}
+              onChange={handleChangeCycleLength}
+              className="form-control-sm"
+            />
+            <h5 className="form-label">
+              What day did your current cycle start? (What was the first day of
+              your last period?)
+            </h5>
 
-          <CardComponent logevent={foo}>
             <div className="containerInputAndButton">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateCalendar value={cycleStartDate} onChange={handleChange} />
+                <DateCalendar
+                  value={cycleStartDate}
+                  onChange={handleChangeCycleStart}
+                />
               </LocalizationProvider>
               <button type="submit" className="btn">
                 Apply

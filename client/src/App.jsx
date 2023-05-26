@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
-import Symptoms from "./pages/Symptoms";
+import Symptom from "./pages/Symptom";
 
 function App() {
   return (
     <>
-
       <nav>
         <ul>
           <li>
@@ -20,8 +19,11 @@ function App() {
       </nav>
 
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/symptoms" element={<Symptoms />} />
+        {/* <Route path="/" element={<Navigate to="/home" replace={true} />}> */}
+          <Route path="/" element={<Home />}>
+            <Route path="/:id" element={<Symptom />} />
+          </Route>
+        {/* </Route> */}
       </Routes>
     </>
   );
