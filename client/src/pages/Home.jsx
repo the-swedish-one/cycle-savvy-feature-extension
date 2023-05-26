@@ -63,10 +63,11 @@ export default function Home() {
 
   const showTips = (id) => {
     console.log(id);
-    const selectedSymptom = symptoms.filter(symptom => symptom.id === id);
-    setSelectedSymptomForTips(selectedSymptom);
+    const selectedSymptom = symptoms.filter((symptom) => symptom.id === id);
+    setSelectedSymptomForTips(selectedSymptom[0]);
     console.log(symptoms);
     console.log(selectedSymptom);
+    console.log(selectedSymptomForTips);
   };
 
   return (
@@ -126,7 +127,16 @@ export default function Home() {
               </ul>
 
               <div className="tipsContainer">
-                Self-care tips and Partner-support tips
+                <h6>Self-care tips</h6>
+                <p>
+                  {selectedSymptomForTips &&
+                    selectedSymptomForTips["self_care_tips"]}
+                </p>
+                <h6>Partner-support tips</h6>
+                <p>
+                  {selectedSymptomForTips &&
+                    selectedSymptomForTips["partner_support_tips"]}
+                </p>
               </div>
             </section>
           )
