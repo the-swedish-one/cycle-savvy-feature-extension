@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import Symptom from "./Symptom";
 import "../App.css";
@@ -6,6 +6,7 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import CardComponent from "../components/CardComponent";
+import TipsContainer from "../components/TipsContainer";
 
 const dayjs = new AdapterDayjs();
 const foo = () => console.log("bla");
@@ -18,7 +19,9 @@ export default function Home() {
   const [error, setError] = useState("");
   const [symptoms, setSymptoms] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedSymptomForTips, setSelectedSymptomForTips] = useState({});
+  const [selectedSymptomForTips, setSelectedSymptomForTips] = useState(null);
+
+  const scrollReference = useRef(null);
 
   useEffect(() => {
     const getCurrentDate = () => {
@@ -44,6 +47,10 @@ export default function Home() {
       Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24)) + 1;
     setDifferenceInDays(differenceInDays);
     setIsLoading(true);
+    console.log(scrollReference.current);
+    scrollReference.current.scrollIntoView({
+      behavior: "smooth",
+    });
     setTimeout(() => {
       setIsLoading(false);
       showSymptoms(differenceInDays);
@@ -81,19 +88,19 @@ export default function Home() {
         <form onSubmit={calculateDifference} className="formContainer">
           <CardComponent>
             <div className="containerInputCycleLength">
-              <h5>
-                What is the average length of your cycle (in days)?
-              </h5>
+              <h5>What is the average length of your cycle (in days)?</h5>
               <input
                 type="number"
                 placeholder="28"
                 value={cycleLength}
                 onChange={handleChangeCycleLength}
                 className="form-control cycleLengthInput"
+                required
               />
               <h5>
-                What is the start date of your current cycle?<br/>(What was the first day
-                of your last period?)
+                What is the start date of your current cycle?
+                <br />
+                (What was the first day of your last period?)
               </h5>
             </div>
 
@@ -120,7 +127,7 @@ export default function Home() {
         </div>
       )}
 
-      <div className="containerSymptomsOrLoading">
+      <div className="containerSymptomsOrLoading" ref={scrollReference}>
         {isLoading ? (
           <div className="typewriter">
             <div className="slide">
@@ -144,18 +151,7 @@ export default function Home() {
                 ))}
               </ul>
 
-              <div className="tipsContainer">
-                <h6>Self-care tips</h6>
-                <p>
-                  {selectedSymptomForTips &&
-                    selectedSymptomForTips["self_care_tips"]}
-                </p>
-                <h6>Partner-support tips</h6>
-                <p>
-                  {selectedSymptomForTips &&
-                    selectedSymptomForTips["partner_support_tips"]}
-                </p>
-              </div>
+              <TipsContainer selectedSymptomForTips={selectedSymptomForTips} />
             </section>
           )
         )}
