@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { Routes, Route, Link } from "react-router-dom";
-import Symptom from "./Symptom";
+import { useSearchParams } from "react-router-dom";
+import { flushSync } from "react-dom";
 import "../App.css";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -9,17 +9,20 @@ import CardComponent from "../components/CardComponent";
 import TipsContainer from "../components/TipsContainer";
 
 const dayjs = new AdapterDayjs();
-const foo = () => console.log("bla");
 
 export default function Home() {
   const [cycleStartDate, setCycleStartDate] = useState(dayjs.dayjs(new Date()));
-  const [cycleLength, setCycleLength] = useState(null);
-  const [currentDate, setCurrentDate] = useState(null);
-  const [differenceInDays, setDifferenceInDays] = useState(null);
+  const [cycleLength, setCycleLength] = useState("");
+  const [currentDate, setCurrentDate] = useState("");
+  const [differenceInDays, setDifferenceInDays] = useState("");
   const [error, setError] = useState("");
-  const [symptoms, setSymptoms] = useState(null);
+  const [symptoms, setSymptoms] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedSymptomForTips, setSelectedSymptomForTips] = useState(null);
+  const [didPagePrepopulate, setDidPagePrepopulate] = useState(false);
+  const [didSelectedSymptomPrepopulate, setDidSelectedSymptomPrepopulate] =
+    useState(false);
+  const [selectedSymptomID, setSelectedSymptomID] = useState("");
+  const [queryParams, setQueryParams] = useSearchParams();
 
   const scrollReference = useRef(null);
 
@@ -32,6 +35,25 @@ export default function Home() {
     getCurrentDate();
   }, []);
 
+  useEffect(() => {
+    const cycleStartDateQuery = queryParams.get("cycleStartDate");
+    const cycleLengthQuery = queryParams.get("cycleLength");
+
+    if (cycleLengthQuery && cycleStartDateQuery) {
+      // console.log(cycleLengthQuery);
+      setCycleStartDate(dayjs.dayjs(cycleStartDateQuery));
+      setCycleLength(cycleLengthQuery);
+      setDidPagePrepopulate(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (didPagePrepopulate) {
+      calculateDifference();
+      setDidPagePrepopulate(false);
+    }
+  }, [didPagePrepopulate]);
+
   const handleChangeCycleStart = (value) => {
     setCycleStartDate(value);
   };
@@ -41,30 +63,37 @@ export default function Home() {
   };
 
   const calculateDifference = (e) => {
-    e.preventDefault();
+    e?.preventDefault();
     const differenceInMilliseconds = new Date() - new Date(cycleStartDate);
     const differenceInDays =
       Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24)) + 1;
     setDifferenceInDays(differenceInDays);
     setIsLoading(true);
-    console.log(scrollReference.current);
+
+    //set query params in the url
+    if (e) {
+      setQueryParams({ cycleStartDate, cycleLength });
+    }
+
+    // console.log(scrollReference.current);
     scrollReference.current.scrollIntoView({
       behavior: "smooth",
     });
+
     setTimeout(() => {
       setIsLoading(false);
       showSymptoms(differenceInDays);
     }, 3000);
   };
 
+  // const selectedSymptomIDQuery = queryParams.get("selectedSymptomID");
+
   const showSymptoms = async (day) => {
     try {
       const response = await fetch(
         `api/users/days/${Math.round((day * 28) / cycleLength)}/symptoms`
       );
-      // console.log(response);
       const data = await response.json();
-      console.log(Math.round((day * 28) / cycleLength));
       setSymptoms(data);
       // console.log(symptoms);
       if (!response.ok) throw new Error(data.message);
@@ -73,9 +102,29 @@ export default function Home() {
     }
   };
 
+  useEffect(() => {
+    if (symptoms) {
+      console.log({ symptoms });
+      const selectedSymptomIDQuery = queryParams.get("selectedSymptomID");
+      console.log(selectedSymptomIDQuery);
+
+      showTips(selectedSymptomIDQuery);
+    }
+  }, [symptoms]);
+
   const showTips = (id) => {
-    const selectedSymptom = symptoms.filter((symptom) => symptom.id === id);
-    setSelectedSymptomForTips(selectedSymptom[0]);
+    console.log({ id });
+    //set selectedSymptom on click, this will be used to show related tips; find returns the symptom object
+    const selectedSymptom = symptoms.find(
+      (symptom) => symptom.id === parseInt(id)
+    );
+    console.log({ selectedSymptom });
+    setSelectedSymptomID(selectedSymptom);
+    //set query params in the url (previousParams already include cycleLength and cycleStartDate, now add selectedSymptomID)
+    setQueryParams((previousParams) => {
+      previousParams.set("selectedSymptomID", id);
+      return previousParams;
+    });
   };
 
   return (
@@ -151,7 +200,10 @@ export default function Home() {
                 ))}
               </ul>
 
-              <TipsContainer selectedSymptomForTips={selectedSymptomForTips} />
+              <TipsContainer
+                selectedSymptomID={selectedSymptomID}
+                symptoms={symptoms}
+              />
             </section>
           )
         )}
