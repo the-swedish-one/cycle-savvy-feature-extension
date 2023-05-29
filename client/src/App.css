@@ -1,5 +1,6 @@
 .navbar {
-  background-color: grey;
+  background-color: #3a4f7a;
+  height: 70px;
 }
 
 .navbarUL {
@@ -17,13 +18,10 @@ body {
 
 * {
   color: #374259;
+  font-family: 'Roboto Slab', serif;
 }
 
 /* #895252, #89526f; */
-
-h1 {
-  text-align: center;
-}
 
 .heroContainer {
   background-color: #6867ac;
@@ -40,7 +38,14 @@ h1 {
 
 .heroText {
   flex: 1;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
+.heroSection:first-of-type {
+  margin-bottom: 7%;
 }
 
 .formContainer {
@@ -55,7 +60,7 @@ h1 {
   text-align: center;
 }
 
-.cycleLengthInput{
+.cycleLengthInput {
   border-radius: 50px;
   border: none;
   margin-bottom: 3%;
@@ -67,10 +72,6 @@ h1 {
   align-items: flex-end;
 }
 
-h4 {
-  color: #ffe6f7;
-}
-
 .MuiPickersSlideTransition-root {
   min-height: 195px !important;
 }
@@ -80,9 +81,17 @@ h4 {
   border-radius: 50px;
   background: linear-gradient(145deg, #b96f9e, #dc84bc);
   box-shadow: 7px 7px 14px #734563, -7px -7px 14px #ffb1fd;
-  font-weight: bold;
   padding: 10px;
   min-width: 100px;
+
+  font-size: larger;
+  font-weight: bold;
+  color: #1f324d;
+}
+
+.btn:hover {
+  color: #072042;
+  box-shadow: 7px 7px 14px #642650, -7px -7px 14px #dd8dda;
 }
 
 .formContainer,
@@ -93,7 +102,6 @@ h4 {
   align-items: center;
   margin-top: 1%;
   padding: 1%;
-  /* border: 1px solid grey; */
 }
 
 .containerSymptomsOrLoading {
@@ -103,10 +111,10 @@ h4 {
 .symptomsContainer {
   border: 1px solid #d3d4ec;
   border-radius: 50px;
-  background-color: #526f89;
+  background-color: #3a4f7a;
   padding: 10px;
   min-width: 500px;
-  margin: 0%;
+  margin: 1%;
   flex: 1;
 }
 
@@ -114,13 +122,21 @@ h4 {
   list-style-type: none;
   padding: 15px;
   border-bottom: 1px solid #d3d4ec;
-  font-size: 16px;
-  color: #ffe6f7;
+  font-size: 18px;
 }
 
-/* .symptomListItem:nth-last-of-type(2n-1) {
-  background-color: red;
-} */
+.symptomListItemText,
+.heroSection,
+p {
+  color: #ffe6f7;
+  text-decoration: none;
+}
+
+.symptomListItemText:hover {
+  /* font-weight: bolder; */
+  font-size: larger;
+  color: #ffbcd1;
+}
 
 .symptomListItem:last-of-type {
   border-bottom: none;
@@ -128,21 +144,19 @@ h4 {
 
 .containerSymptomsAndTips {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 15px;
   width: 100%;
 }
 
-
-
 /* TYPEWRITER CODE */
 .typewriter {
-  --blue: #5c86ff;
-  --blue-dark: #275efe;
+  --blue: #4763b8;
+  --blue-dark: #3a4f7a;
   --key: #fff;
   --paper: #eef0fd;
   --text: #d3d4ec;
-  --tool: #fbc56c;
+  --tool: #dfa446;
   --duration: 3s;
   position: relative;
   -webkit-animation: bounce05 var(--duration) linear infinite;

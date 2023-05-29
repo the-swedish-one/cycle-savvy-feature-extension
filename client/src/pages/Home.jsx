@@ -155,7 +155,27 @@ export default function Home() {
     <>
       <div className="heroContainer">
         <div className="heroText">
-          <h1>Welcome, User!</h1>
+          <div className="heroSection">
+            <h1>Meet CycleSavvy</h1>
+            <h4>
+              She is here to empower individuals to embrace their bodies,
+              celebrate their uniqueness, and foster healthier relationships
+            </h4>
+          </div>
+          <div>
+            <p>
+              CycleSavvy is your trusted web app companion for understanding and
+              embracing the menstrual cycle. Discover what symptoms are
+              completely normal to experience today and how you can help your
+              well-being.
+            </p>
+            <p>
+              CycleSavvy recognizes the vital role that partners play in this
+              journey. Understanding that a little support can go a long way,
+              she provides partner-support tips to help them become
+              compassionate allies.
+            </p>
+          </div>
         </div>
 
         <form onSubmit={showDayOfCycle} className="formContainer">
@@ -221,6 +241,7 @@ export default function Home() {
                       )}&cycleLength=${queryParams.get(
                         "cycleLength"
                       )}&selectedSymptomID=${symptom.id}`}
+                      className="symptomListItemText"
                     >
                       {symptom["symptom_name"]}
                     </Link>

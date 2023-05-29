@@ -18,7 +18,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate replace to="/home" />} />
         <Route path="/home" element={<Home />}>
-          {/* <Route path="/:id" element={<TipsContainer />} /> */}
         </Route>
       </Routes>
     </>
