@@ -216,7 +216,9 @@ export default function Home() {
         <div className="resultContainer">
           {/* <h3>Your current cycle started on {cycleStartDate}</h3> */}
           <h3>You are currently on day {currentDayOfCycle} of your cycle</h3>
-          <h4>And here are the symptoms you may experience today:</h4>
+          <h4>
+            Experiencing any of the following symptoms today is totally normal:
+          </h4>
         </div>
       )}
 

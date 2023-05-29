@@ -9,31 +9,19 @@
 
 body {
   background-color: #ffbcd1;
-  /* background-image: url(../bg.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-height: 100vh;
-  background-position: center; */
 }
 
 * {
   color: #374259;
-  font-family: 'Roboto Slab', serif;
+  font-family: "Roboto Slab", serif;
 }
-
-/* #895252, #89526f; */
 
 .heroContainer {
   background-color: #6867ac;
-  /* background-image: url(../bg.jpg); */
-  /* background-repeat: no-repeat; */
-  /* background-size: cover; */
-  /* min-height: 100vh; */
-  /* background-position: center; */
-  padding: 1%;
+  padding: 2%;
   color: #ffe6f7;
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-evenly; */
 }
 
 .heroText {
@@ -42,6 +30,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-left: 3%;
 }
 
 .heroSection:first-of-type {
@@ -50,7 +39,7 @@ body {
 
 .formContainer {
   flex: 1;
-  /* max-width: 600px; */
+  max-width: 800px;
 }
 
 .containerInputCycleLength {
@@ -100,8 +89,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1%;
-  padding: 1%;
+  margin-top: 2%;
+
 }
 
 .containerSymptomsOrLoading {
@@ -112,9 +101,10 @@ body {
   border: 1px solid #d3d4ec;
   border-radius: 50px;
   background-color: #3a4f7a;
-  padding: 10px;
+  padding: 20px;
   min-width: 500px;
-  margin: 1%;
+  max-width: 700px;
+  margin: 0% 1% 1% 1%;
   flex: 1;
 }
 
@@ -144,8 +134,10 @@ p {
 
 .containerSymptomsAndTips {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   padding: 15px;
+  /* margin-left: 15px;
+  margin-right: 15px; */
   width: 100%;
 }
 
