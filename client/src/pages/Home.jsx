@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
-import { flushSync } from "react-dom";
 import "../App.css";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -14,31 +13,32 @@ export default function Home() {
   const [cycleStartDate, setCycleStartDate] = useState(dayjs.dayjs(new Date()));
   const [cycleLength, setCycleLength] = useState("");
   const [currentDate, setCurrentDate] = useState("");
-  const [differenceInDays, setDifferenceInDays] = useState("");
+  const [currentDayOfCycle, setCurrentDayOfCycle] = useState("");
   const [error, setError] = useState("");
   const [symptoms, setSymptoms] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [didPagePrepopulate, setDidPagePrepopulate] = useState(false);
-  const [didSelectedSymptomPrepopulate, setDidSelectedSymptomPrepopulate] =
-    useState(false);
-  const [selectedSymptomID, setSelectedSymptomID] = useState("");
+  const [selectedSymptom, setSelectedSymptom] = useState("");
   const [queryParams, setQueryParams] = useSearchParams();
 
   const scrollReference = useRef(null);
 
+  //this useEffect calculates current date on page reload. Current date is used in calculating the cycle day
   useEffect(() => {
     const getCurrentDate = () => {
       const today = new Date();
-      setCurrentDate(today.toString().substring(0, 15));
+      setCurrentDate(today);
+      // setCurrentDate(today.toString().substring(0, 15));
     };
-
     getCurrentDate();
   }, []);
 
+  //this useEffect gets query params from the URL
   useEffect(() => {
     const cycleStartDateQuery = queryParams.get("cycleStartDate");
     const cycleLengthQuery = queryParams.get("cycleLength");
 
+    //if the following conditions are true, it means that the page was pre-populated with inputs
     if (cycleLengthQuery && cycleStartDateQuery) {
       // console.log(cycleLengthQuery);
       setCycleStartDate(dayjs.dayjs(cycleStartDateQuery));
@@ -47,30 +47,38 @@ export default function Home() {
     }
   }, []);
 
+  //following the previous function, if page WAS pre-populated, this is to call the showDayOfCycle function with pre-populated inputs
   useEffect(() => {
     if (didPagePrepopulate) {
-      calculateDifference();
+      showDayOfCycle();
       setDidPagePrepopulate(false);
     }
   }, [didPagePrepopulate]);
 
+  //change event handler for the calendar, i.e. start date of the current cycle
   const handleChangeCycleStart = (value) => {
     setCycleStartDate(value);
   };
 
+  //change event handler for the input tag, i.e. average length of cycle
   const handleChangeCycleLength = (event) => {
     setCycleLength(event.target.value);
   };
 
-  const calculateDifference = (e) => {
+  //function that calculates difference between current date and cycle start date to show the current day of cycle
+  const showDayOfCycle = (e) => {
     e?.preventDefault();
-    const differenceInMilliseconds = new Date() - new Date(cycleStartDate);
-    const differenceInDays =
+
+    //main calculation
+    const differenceInMilliseconds = currentDate - new Date(cycleStartDate);
+    const currentDayOfCycle =
       Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24)) + 1;
-    setDifferenceInDays(differenceInDays);
+    //setter for current day of cycle
+    setCurrentDayOfCycle(currentDayOfCycle);
+    //set loading to true for the animation to appear
     setIsLoading(true);
 
-    //set query params in the url
+    //set query params in the url (save them for shareability)
     if (e) {
       setQueryParams({ cycleStartDate, cycleLength });
     }
@@ -80,46 +88,48 @@ export default function Home() {
       behavior: "smooth",
     });
 
+    //setting timeout for the "loading" animation to stay on screen for 3 seconds before loading results
     setTimeout(() => {
+      //set loading to false for the animation to disappear
       setIsLoading(false);
-      showSymptoms(differenceInDays);
+      showSymptoms(currentDayOfCycle);
     }, 3000);
   };
 
-  // const selectedSymptomIDQuery = queryParams.get("selectedSymptomID");
-
+  //function to make symptoms for the specific day of cycle appear based on the user input
   const showSymptoms = async (day) => {
+    //API call to the backend to fetch symptoms for the specific day
     try {
       const response = await fetch(
-        `api/users/days/${Math.round((day * 28) / cycleLength)}/symptoms`
+        `api/users/days/${Math.round((day * 28) / cycleLength)}/symptoms` // the formula to prorate day of cycle based on average cycle length (the database has a total of 28 days)
       );
       const data = await response.json();
       setSymptoms(data);
-      // console.log(symptoms);
       if (!response.ok) throw new Error(data.message);
     } catch (err) {
       setError(err.message);
     }
   };
 
+  //if symptoms are changed (i.e. on page load because input was pre-populated), get queryParams if symptom was selected
   useEffect(() => {
     if (symptoms) {
-      console.log({ symptoms });
-      const selectedSymptomIDQuery = queryParams.get("selectedSymptomID");
-      console.log(selectedSymptomIDQuery);
-
+      const selectedSymptomIDQuery = queryParams.get("selectedSymptomID"); //selectedSymptomID is a number (ID)
+      //now use the pre-populated selected symptom's ID as an argument in showTips and call showTips
       showTips(selectedSymptomIDQuery);
     }
   }, [symptoms]);
 
+  //show tips upon clicking on a particular symptom; symptom's id is passed as an argument
   const showTips = (id) => {
-    console.log({ id });
     //set selectedSymptom on click, this will be used to show related tips; find returns the symptom object
-    const selectedSymptom = symptoms.find(
-      (symptom) => symptom.id === parseInt(id)
+    const newSelectedSymptom = symptoms.find(
+      (symptom) => symptom.id === parseInt(id) //parseInt is needed to turn string into a number because if pre-populated in the url, queryParams return a string
     );
-    console.log({ selectedSymptom });
-    setSelectedSymptomID(selectedSymptom);
+
+    //set selected symptom with the symptom found per its id
+    setSelectedSymptom(newSelectedSymptom);
+
     //set query params in the url (previousParams already include cycleLength and cycleStartDate, now add selectedSymptomID)
     setQueryParams((previousParams) => {
       previousParams.set("selectedSymptomID", id);
@@ -134,7 +144,7 @@ export default function Home() {
           <h1>Welcome, User!</h1>
         </div>
 
-        <form onSubmit={calculateDifference} className="formContainer">
+        <form onSubmit={showDayOfCycle} className="formContainer">
           <CardComponent>
             <div className="containerInputCycleLength">
               <h5>What is the average length of your cycle (in days)?</h5>
@@ -168,10 +178,10 @@ export default function Home() {
         </form>
       </div>
 
-      {differenceInDays !== null && (
+      {currentDayOfCycle !== null && (
         <div className="resultContainer">
           {/* <h3>Your current cycle started on {cycleStartDate}</h3> */}
-          <h3>You are currently on day {differenceInDays} of your cycle</h3>
+          <h3>You are currently on day {currentDayOfCycle} of your cycle</h3>
           <h4>And here are the symptoms you may experience today:</h4>
         </div>
       )}
@@ -201,7 +211,7 @@ export default function Home() {
               </ul>
 
               <TipsContainer
-                selectedSymptomID={selectedSymptomID}
+                selectedSymptom={selectedSymptom}
                 symptoms={symptoms}
               />
             </section>
