@@ -12,6 +12,10 @@ router.get('/', async function (req, res, next) {
   }
 });
 
+
+
+
+
 //GET all columns (symptom_name, self_care_tips, partner_support_tips) from symptoms table per specific day_of_cycle
 router.get('/days/:day/symptoms', async function (req, res, next) {
 

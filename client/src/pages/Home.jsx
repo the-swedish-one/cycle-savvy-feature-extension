@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import "../App.css";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -15,10 +15,10 @@ export default function Home() {
   const [currentDate, setCurrentDate] = useState("");
   const [currentDayOfCycle, setCurrentDayOfCycle] = useState("");
   const [error, setError] = useState("");
-  const [symptoms, setSymptoms] = useState("");
+  const [symptoms, setSymptoms] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [didPagePrepopulate, setDidPagePrepopulate] = useState(false);
-  const [selectedSymptom, setSelectedSymptom] = useState("");
+  // const [selectedSymptom, setSelectedSymptom] = useState("");
   const [queryParams, setQueryParams] = useSearchParams();
 
   const scrollReference = useRef(null);
@@ -35,7 +35,7 @@ export default function Home() {
 
   //this useEffect gets query params from the URL
   useEffect(() => {
-    const cycleStartDateQuery = queryParams.get("cycleStartDate");
+    const cycleStartDateQuery = new Date(queryParams.get("cycleStartDate"));
     const cycleLengthQuery = queryParams.get("cycleLength");
 
     //if the following conditions are true, it means that the page was pre-populated with inputs
@@ -80,13 +80,22 @@ export default function Home() {
 
     //set query params in the url (save them for shareability)
     if (e) {
-      setQueryParams({ cycleStartDate, cycleLength });
+      setQueryParams({
+        cycleStartDate: cycleStartDate.toISOString().split("T")[0],
+        cycleLength,
+      });
     }
 
     // console.log(scrollReference.current);
-    scrollReference.current.scrollIntoView({
-      behavior: "smooth",
-    });
+    const executeScroll = () =>
+      scrollReference.current.scrollIntoView({
+        inline: "center",
+        behavior: "smooth",
+        alignToTop: false,
+        block: "nearest",
+      });
+
+    executeScroll();
 
     //setting timeout for the "loading" animation to stay on screen for 3 seconds before loading results
     setTimeout(() => {
@@ -115,27 +124,32 @@ export default function Home() {
   useEffect(() => {
     if (symptoms) {
       const selectedSymptomIDQuery = queryParams.get("selectedSymptomID"); //selectedSymptomID is a number (ID)
+
       //now use the pre-populated selected symptom's ID as an argument in showTips and call showTips
-      showTips(selectedSymptomIDQuery);
+      //showTips(selectedSymptomIDQuery);
     }
   }, [symptoms]);
 
   //show tips upon clicking on a particular symptom; symptom's id is passed as an argument
-  const showTips = (id) => {
-    //set selectedSymptom on click, this will be used to show related tips; find returns the symptom object
-    const newSelectedSymptom = symptoms.find(
-      (symptom) => symptom.id === parseInt(id) //parseInt is needed to turn string into a number because if pre-populated in the url, queryParams return a string
-    );
+  // const showTips = (id) => {
+  //   //set selectedSymptom on click, this will be used to show related tips; find returns the symptom object
+  //   const newSelectedSymptom = symptoms.find(
+  //     (symptom) => symptom.id === parseInt(id) //parseInt is needed to turn string into a number because if pre-populated in the url, queryParams return a string
+  //   );
 
-    //set selected symptom with the symptom found per its id
-    setSelectedSymptom(newSelectedSymptom);
+  //   //set selected symptom with the symptom found per its id
+  //   setSelectedSymptom(newSelectedSymptom);
 
-    //set query params in the url (previousParams already include cycleLength and cycleStartDate, now add selectedSymptomID)
-    setQueryParams((previousParams) => {
-      previousParams.set("selectedSymptomID", id);
-      return previousParams;
-    });
-  };
+  //   //set query params in the url (previousParams already include cycleLength and cycleStartDate, now add selectedSymptomID)
+  //   // setQueryParams((previousParams) => {
+  //   //   previousParams.set("selectedSymptomID", id);
+  //   //   return previousParams;
+  //   // });
+  // };
+
+  const selectedSymptom = symptoms?.find(
+    (symptom) => symptom.id === parseInt(queryParams.get("selectedSymptomID")) //parseInt is needed to turn string into a number because if pre-populated in the url, queryParams return a string
+  );
 
   return (
     <>
@@ -200,12 +214,16 @@ export default function Home() {
             <section className="containerSymptomsAndTips">
               <ul className="symptomsContainer">
                 {symptoms.map((symptom) => (
-                  <li
-                    key={symptom.id}
-                    onClick={() => showTips(symptom.id)}
-                    className="symptomListItem"
-                  >
-                    {symptom["symptom_name"]}
+                  <li key={symptom.id} className="symptomListItem">
+                    <Link
+                      to={`/home?cycleStartDate=${queryParams.get(
+                        "cycleStartDate"
+                      )}&cycleLength=${queryParams.get(
+                        "cycleLength"
+                      )}&selectedSymptomID=${symptom.id}`}
+                    >
+                      {symptom["symptom_name"]}
+                    </Link>
                   </li>
                 ))}
               </ul>

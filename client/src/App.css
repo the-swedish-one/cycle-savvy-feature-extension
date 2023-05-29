@@ -96,6 +96,10 @@ h4 {
   /* border: 1px solid grey; */
 }
 
+.containerSymptomsOrLoading {
+  min-height: 500px;
+}
+
 .symptomsContainer {
   border: 1px solid #d3d4ec;
   border-radius: 50px;
@@ -129,15 +133,7 @@ h4 {
   width: 100%;
 }
 
-.tipsContainer {
-  border: 1px solid #d3d4ec;
-  border-radius: 50px;
-  background-color: #526f89;
-  color: #ffe6f7;
-  min-width: 500px;
-  padding: 20px;
-  flex: 1;
-}
+
 
 /* TYPEWRITER CODE */
 .typewriter {
