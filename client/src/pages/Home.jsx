@@ -28,7 +28,6 @@ export default function Home() {
     const getCurrentDate = () => {
       const today = new Date();
       setCurrentDate(today);
-      // setCurrentDate(today.toString().substring(0, 15));
     };
     getCurrentDate();
   }, []);
@@ -150,6 +149,7 @@ export default function Home() {
   const selectedSymptom = symptoms?.find(
     (symptom) => symptom.id === parseInt(queryParams.get("selectedSymptomID")) //parseInt is needed to turn string into a number because if pre-populated in the url, queryParams return a string
   );
+  console.log(selectedSymptom);
 
   return (
     <>
@@ -215,9 +215,12 @@ export default function Home() {
       {currentDayOfCycle !== null && (
         <div className="resultContainer">
           {/* <h3>Your current cycle started on {cycleStartDate}</h3> */}
-          <h3 className="dayOfCycleText">You are currently on day {currentDayOfCycle} of your cycle</h3>
+          <h3 className="dayOfCycleText">
+            You are currently on day {currentDayOfCycle} of your cycle
+          </h3>
           <h4>
-            Remember that experiencing any of the following symptoms today is totally normal:
+            Remember that experiencing any of the following symptoms today is
+            totally normal:
           </h4>
         </div>
       )}
@@ -232,7 +235,7 @@ export default function Home() {
             <div className="keyboard"></div>
           </div>
         ) : (
-          symptoms && (
+          symptoms[0] && (
             <section className="containerSymptomsAndTips">
               <ul className="symptomsContainer">
                 {symptoms.map((symptom) => (

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
-import TipsContainer from "./components/TipsContainer";
 
 function App() {
   return (

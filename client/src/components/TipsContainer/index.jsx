@@ -1,11 +1,13 @@
 import PropType from "prop-types";
+import { useEffect, useState } from "react";
+
 
 import "./styles.css";
 
 const TipsContainer = (props) => {
-  const { selectedSymptom } = props;
-
+  const { selectedSymptom, symptoms } = props;
   const { displayName } = TipsContainer;
+
 
   return (
     <div className="tipsContainer">
