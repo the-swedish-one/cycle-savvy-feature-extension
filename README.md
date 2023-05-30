@@ -30,3 +30,5 @@
 
 - Run `npm start` in project directory to start the Express server on port 4000
 - In another terminal, do `cd client` and run `npm start` to start the client in development mode with hot reloading in port 5173.
+
+:joy:
