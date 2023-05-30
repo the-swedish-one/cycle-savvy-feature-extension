@@ -1,0 +1,44 @@
+.tipsContainer {
+  border: 1px solid #d3d4ec;
+  border-radius: 50px;
+  background-color: #3a4f7a;
+  min-width: 500px;
+  max-width: 700px;
+  padding: 20px;
+  flex: 1;
+  margin: 0% 1% 1% 1%;
+  /* display: flex;
+  flex-direction: column; */
+}
+
+.tipsSection {
+  margin-top: 1%;
+  margin-bottom: 30px;
+}
+
+.tipsText {
+  color: #ffe6f7;
+  font-size: 18px;
+}
+
+.initialText {
+    color: #ffe6f7;
+    text-align: center;
+}
+
+.tipsHeader {
+  color: #ffbcd1;
+  font-size: 22px;
+}
+
+.mainTipsHeader {
+  color: #ffe6f7;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.tipsNote {
+  color: #ffe6f7;
+  border-top: 1px dashed #ffe6f7;
+}

@@ -1,0 +1,7 @@
+.CardComponent {
+  background-color: #CE7BB0;
+  padding: 20px;
+  min-width: 100px;
+  min-height: 100px;
+  border-radius: 50px;
+}
