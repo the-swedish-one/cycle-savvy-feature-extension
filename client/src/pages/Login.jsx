@@ -3,8 +3,8 @@ import axios from "axios";
 
 function Login() {
   const [credentials, setCredentials] = useState({
-    username: "test",
-    password: "test",
+    username: "username",
+    password: "password",
   });
 
   const [data, setData] = useState(null);
@@ -35,6 +35,22 @@ function Login() {
 
   const logout = () => {
     localStorage.removeItem("token");
+    setData("You have logged out");
+  };
+
+  const register = async () => {
+    try {
+      const { data } = await axios("/api/auth/register", {
+        method: "POST",
+        data: credentials,
+      });
+
+      console.log(data.message);
+      setData(data.message);
+    } catch (error) {
+      console.log(error);
+      setData(error.message);
+    }
   };
 
   const requestData = async () => {
@@ -77,6 +93,11 @@ function Login() {
             Log out
           </button>
         </div>
+      </div>
+      <div className="text-center p-4">
+        <button className=" btn btn-outline-primary" onClick={register}>
+          Register
+        </button>
       </div>
       <div className="text-center p-4">
         <button className=" btn btn-outline-primary" onClick={requestData}>
