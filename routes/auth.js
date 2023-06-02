@@ -19,7 +19,7 @@ router.post("/register", async (req, res) => {
       `INSERT INTO users (username, password) VALUES ("${username}", "${hash}")`
     );
 
-    res.send({ message: "Register successful" });
+    res.send({ message: "New user created!" });
   } catch (err) {
     res.status(400).send({ message: err.message });
   }
@@ -41,7 +41,7 @@ router.post("/login", async (req, res) => {
       if (!correctPassword) throw new Error("Incorrect password");
 
       var token = jwt.sign({ user_id }, supersecret);
-      res.send({ message: "Login successful, here is your token", token });
+      res.send({ message: "Login successful!", token });
     } else {
       throw new Error("User does not exist");
     }
