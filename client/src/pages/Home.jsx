@@ -184,7 +184,7 @@ export default function Home() {
               <h5>What is the average length of your cycle (in days)?</h5>
               <input
                 type="number"
-                placeholder="28"
+                placeholder="e.g. 28"
                 value={cycleLength}
                 onChange={handleChangeCycleLength}
                 className="form-control cycleLengthInput"
