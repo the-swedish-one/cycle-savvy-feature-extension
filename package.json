@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "migrate": "node model/database.js"
+    "migrate": "npx sequelize-cli db:migrate"
   },
   "dependencies": {
     "@mui/x-date-pickers": "^6.5.0",
