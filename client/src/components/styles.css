@@ -1,0 +1,8 @@
+.navbar {
+  background-color: #3a4f7a;
+  height: 70px;
+}
+
+.navbarUL {
+  list-style-type: none;
+}
