@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "migrate": "npx sequelize-cli db:migrate",
-    "seed": "npx sequelize-cli db:seed:all"
+    "seed": "node modelOLD/database.js"
   },
   "dependencies": {
     "@mui/x-date-pickers": "^6.5.0",
