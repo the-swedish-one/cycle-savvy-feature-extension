@@ -1,13 +1,11 @@
 import PropType from "prop-types";
 import { useEffect, useState } from "react";
 
-
 import "./styles.css";
 
 const TipsContainer = (props) => {
   const { selectedSymptom, symptoms } = props;
   const { displayName } = TipsContainer;
-
 
   return (
     <div className="tipsContainer">
@@ -21,12 +19,12 @@ const TipsContainer = (props) => {
         </div>
       )}
       {selectedSymptom && (
-        <h5 className="mainTipsHeader">{selectedSymptom["symptom_name"]}</h5>
+        <h5 className="mainTipsHeader">{selectedSymptom["symptomName"]}</h5>
       )}
       {selectedSymptom && (
         <div className="tipsSection">
           <h6 className="tipsHeader">Self-care tips</h6>
-          <p className="tipsText">{selectedSymptom["self_care_tips"]}</p>
+          <p className="tipsText">{selectedSymptom["selfCareTips"]}</p>
           <p className="tipsNote">
             Remember that these self-care tips can help manage symptoms, but if
             your symptoms are severe, persist for an extended period, or
@@ -39,7 +37,7 @@ const TipsContainer = (props) => {
       {selectedSymptom && (
         <div className="tipsSection">
           <h6 className="tipsHeader">Partner-support tips</h6>
-          <p className="tipsText">{selectedSymptom["partner_support_tips"]}</p>
+          <p className="tipsText">{selectedSymptom["partnerSupportTips"]}</p>
           <p className="tipsNote">
             These partner support tips aim to foster understanding, empathy, and
             active involvement in supporting a woman's well-being during her
