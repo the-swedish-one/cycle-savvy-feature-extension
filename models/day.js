@@ -1,7 +1,6 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Day extends Model {
     /**
@@ -11,13 +10,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Day.belongsToMany(models.Symptom, { through: "DaysSymptoms" });
     }
   }
-  Day.init({
-    dayOfCycle: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Day',
-  });
+  Day.init(
+    {
+      dayOfCycle: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: "Day",
+    }
+  );
   return Day;
 };
