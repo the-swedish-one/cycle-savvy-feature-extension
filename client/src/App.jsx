@@ -2,25 +2,48 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
-import Login from "./pages/Login.jsx";
+import Login from "./pages/Login";
+import ProfilePage from "./pages/ProfilePage";
+import NavBar from "./components/NavBar";
+import AuthContext from "./contexts/AuthContext";
 
 function App() {
-  return (
-    <>
-      <nav className="navbar">
-        <ul className="navbarUL">
-          <li>
-            <img src="../CycleSavvyLogoTransparent2.png" alt="" width="200px" />
-          </li>
-        </ul>
-      </nav>
+  const [user, setUser] = useState(null);
 
-      <Routes>
-        <Route path="/" element={<Navigate replace to="/home" />} />
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/home" element={<Home />}></Route>
-      </Routes>
-    </>
+  useEffect(() => {}, []);
+
+  function login(username, password) {
+    // login
+    setUser(true);
+    console.log("login");
+  }
+
+  function logout() {
+    // logout
+    setUser(false);
+    console.log("logout");
+  }
+
+  const authObject = {
+    user,
+    login,
+    logout,
+  };
+
+  return (
+    <AuthContext.Provider value={authObject}>
+      <>
+        <NavBar />
+
+        <Routes>
+          <Route path="/" element={<Navigate replace to="/home" />} />
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/home" element={<Home />}></Route>
+          <Route path="/profile" element={<ProfilePage />}></Route>
+        </Routes>
+      </>
+      //{" "}
+    </AuthContext.Provider>
   );
 }
 
