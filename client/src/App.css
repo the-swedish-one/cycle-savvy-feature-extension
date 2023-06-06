@@ -1,12 +1,3 @@
-.navbar {
-  background-color: #3a4f7a;
-  height: 70px;
-}
-
-.navbarUL {
-  list-style-type: none;
-}
-
 body {
   background-color: #ffbcd1;
 }
@@ -97,7 +88,6 @@ body {
 
 .dayOfCycleText {
   margin-bottom: 1%;
-  
 }
 
 .containerSymptomsOrLoading {
