@@ -109,7 +109,7 @@ export default function Home() {
     //API call to the backend to fetch symptoms for the specific day
     try {
       const response = await fetch(
-        `api/users/days/${Math.round((day * 28) / cycleLength)}/symptoms` // the formula to prorate day of cycle based on average cycle length (the database has a total of 28 days)
+        `api/symptoms/days/${Math.round((day * 28) / cycleLength)}` // the formula to prorate day of cycle based on average cycle length (the database has a total of 28 days)
       );
       const data = await response.json();
       setSymptoms(data);
@@ -248,7 +248,7 @@ export default function Home() {
                       )}&selectedSymptomID=${symptom.id}`}
                       className="symptomListItemText"
                     >
-                      {symptom["symptom_name"]}
+                      {symptom["symptomName"]}
                     </Link>
                   </li>
                 ))}
