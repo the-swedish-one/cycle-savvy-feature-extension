@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+// import AuthContext from "../contexts/AuthContext";
 import axios from "axios";
 
 function Login() {
+  // const auth = useContext();
+
   const [credentials, setCredentials] = useState({
     username: "username",
     password: "password",
@@ -25,6 +28,7 @@ function Login() {
 
       //store it locally
       localStorage.setItem("token", data.token);
+      auth.login();
       console.log(data.message, data.token);
       setData(data.message);
     } catch (error) {
@@ -35,6 +39,7 @@ function Login() {
 
   const logout = () => {
     localStorage.removeItem("token");
+    auth.logout();
     setData("You have logged out");
   };
 
@@ -53,20 +58,20 @@ function Login() {
     }
   };
 
-  const requestData = async () => {
-    try {
-      const { data } = await axios("/api/auth/profile", {
-        headers: {
-          authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
-      setData(data.message);
-      console.log(data.message);
-    } catch (error) {
-      console.log(error);
-      setData(error.message);
-    }
-  };
+  // const requestData = async () => {
+  //   try {
+  //     const { data } = await axios("/api/auth/profile", {
+  //       headers: {
+  //         authorization: "Bearer " + localStorage.getItem("token"),
+  //       },
+  //     });
+  //     setData(data.message);
+  //     console.log(data.message);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setData(error.message);
+  //   }
+  // };
 
   return (
     <div>
@@ -99,11 +104,11 @@ function Login() {
           Register
         </button>
       </div>
-      <div className="text-center p-4">
+      {/* <div className="text-center p-4">
         <button className=" btn btn-outline-primary" onClick={requestData}>
           Request protected data
         </button>
-      </div>
+      </div> */}
 
       {data && (
         <div className="text-center p-4">
