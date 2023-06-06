@@ -3,6 +3,7 @@ var router = express.Router();
 var jwt = require("jsonwebtoken");
 var userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn");
 var db = require("../modelOLD/helper");
+const models = require("../models");
 require("dotenv").config();
 var bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -15,9 +16,10 @@ router.post("/register", async (req, res) => {
   try {
     const hash = await bcrypt.hash(password, saltRounds);
 
-    await db(
-      `INSERT INTO users (username, password) VALUES ("${username}", "${hash}")`
-    );
+    const user = await models.User.create({
+      username,
+      password: hash,
+    });
 
     res.send({ message: "New user created!" });
   } catch (err) {
@@ -29,10 +31,11 @@ router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const results = await db(
-      `SELECT * FROM users WHERE username = "${username}"`
-    );
-    const user = results.data[0];
+    const user = await models.User.findOne({
+      where: {
+        username,
+      },
+    });
     if (user) {
       const user_id = user.id;
 
