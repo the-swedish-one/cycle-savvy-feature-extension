@@ -1,38 +1,38 @@
-DROP TABLE if exists days_symptoms;
-DROP TABLE if exists symptoms;
-DROP TABLE if exists days;
-DROP TABLE IF EXISTS `users`; 
+-- DROP TABLE if exists days_symptoms;
+-- DROP TABLE if exists symptoms;
+-- DROP TABLE if exists days;
+-- DROP TABLE IF EXISTS `users`; 
 
-CREATE TABLE `users`(
-	`id` INT NOT NULL AUTO_INCREMENT, 
-	`username` VARCHAR(255) NOT NULL, 
-	`password` VARCHAR(255) NOT NULL, 
-	PRIMARY KEY (id)
-);
+-- CREATE TABLE `users`(
+-- 	`id` INT NOT NULL AUTO_INCREMENT, 
+-- 	`username` VARCHAR(255) NOT NULL, 
+-- 	`password` VARCHAR(255) NOT NULL, 
+-- 	PRIMARY KEY (id)
+-- );
 
-CREATE TABLE symptoms (
-  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  symptom_name VARCHAR(255) NOT NULL,
-  self_care_tips TEXT,
-  partner_support_tips TEXT
-);
+-- CREATE TABLE symptoms (
+--   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+--   symptom_name VARCHAR(255) NOT NULL,
+--   self_care_tips TEXT,
+--   partner_support_tips TEXT
+-- );
 
-CREATE TABLE days_symptoms (
-	day_of_cycle INT NOT NULL,
-	symptom_id INT NOT NULL
-);
+-- CREATE TABLE days_symptoms (
+-- 	day_of_cycle INT NOT NULL,
+-- 	symptom_id INT NOT NULL
+-- );
 
-CREATE TABLE days (
-	id INT NOT NULL AUTO_INCREMENT,
-	day_of_cycle INT NOT NULL,
-	PRIMARY KEY (id)
-);
+-- CREATE TABLE days (
+-- 	id INT NOT NULL AUTO_INCREMENT,
+-- 	day_of_cycle INT NOT NULL,
+-- 	PRIMARY KEY (id)
+-- );
 
-ALTER TABLE days_symptoms ADD CONSTRAINT days_symptoms_fk0 FOREIGN KEY (day_of_cycle) REFERENCES days(id);
+-- ALTER TABLE days_symptoms ADD CONSTRAINT days_symptoms_fk0 FOREIGN KEY (day_of_cycle) REFERENCES days(id);
 
-ALTER TABLE days_symptoms ADD CONSTRAINT days_symptoms_fk1 FOREIGN KEY (symptom_id) REFERENCES symptoms(id);
+-- ALTER TABLE days_symptoms ADD CONSTRAINT days_symptoms_fk1 FOREIGN KEY (symptom_id) REFERENCES symptoms(id);
 
-INSERT INTO symptoms (symptom_name, self_care_tips, partner_support_tips) VALUES
+INSERT INTO Symptoms (symptomName, selfCareTips, partnerSupportTips) VALUES
   ('Moderate to heavy menstrual bleeding', 'Use a menstrual cup or tampons with higher absorbency. Change pads or tampons regularly.', 'Offer to run errands or help with household chores during her period. Offer emotional support and understanding during this time.'),
   ('Lighter menstrual bleeding or spotting', 'Use panty liners or light absorbency tampons. Keep track of your cycle to anticipate spotting. Stay hydrated to support overall menstrual health.', 'Be understanding and patient if plans need to be adjusted. Provide emotional support and reassurance.'),
   ('Abdominal cramps (dysmenorrhea)', 'Apply a heating pad or take a warm bath to alleviate cramps. Practice gentle exercises like yoga or walking. Over-the-counter pain relievers can help.', 'Offer to prepare warm beverages or meals that may help soothe her cramps. Provide gentle massages or assist with applying heat to the lower abdomen. Surprise her with small gestures of love and affection to brighten her day!'),
@@ -56,12 +56,12 @@ INSERT INTO symptoms (symptom_name, self_care_tips, partner_support_tips) VALUES
   ('Acne breakouts or changes in skin', 'Cleanse your face twice daily and avoid harsh, drying products. Use non-comedogenic or oil-free skincare products. Maintain a healthy diet and stay hydrated for overall skin health.', 'Offer compliments and reassurance during times of skin changes.'),
   ('Nausea or digestive issues (e.g., bloating, constipation, or diarrhea)', 'Eat smaller, more frequent meals to alleviate nausea. Stay hydrated and opt for light, easily digestible foods. Incorporate fiber-rich foods to prevent constipation and promote regular bowel movements.', 'Assist in meal planning to include light, easily digestible foods. Offer to help with grocery shopping. Provide emotional support and reassurance during digestive discomfort.');
 
-  INSERT INTO days (day_of_cycle) VALUES
+  INSERT INTO Days (dayOfCycle) VALUES
   (1), (2), (3), (4), (5), (6), (7), (8), (9), (10),
   (11), (12), (13), (14), (15), (16), (17), (18), (19), (20),
   (21), (22), (23), (24), (25), (26), (27), (28);
 
-  INSERT INTO days_symptoms (day_of_cycle, symptom_id) VALUES
+  INSERT INTO DaysSymptoms (dayId, symptomId) VALUES
   (1, 1), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8),
   (2, 1), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (2, 8),
   (3, 1), (3, 3), (3, 4), (3, 5), (3, 6), (3, 7), (3, 8),
