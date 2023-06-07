@@ -1,0 +1,32 @@
+.navbar {
+  background-color: #3a4f7a;
+  height: 70px;
+}
+
+.navbarUL {
+  display: flex;
+  list-style-type: none;
+  justify-content: space-between;
+}
+
+.logo {
+  margin-left: 2%;
+}
+
+.btn-nav {
+  border-radius: 50px;
+  background: linear-gradient(145deg, #b96f9e, #dc84bc);
+  /* box-shadow: 7px 7px 14px #734563, -7px -7px 14px #ffb1fd; */
+  padding: 10px;
+  margin-right: 10px;
+  min-width: 100px;
+
+  font-size: larger;
+  font-weight: bold;
+  color: #1f324d;
+}
+
+.btn-nav:hover {
+  color: #072042;
+  box-shadow: 7px 7px 14px #642650, -7px -7px 14px #dd8dda;
+}
