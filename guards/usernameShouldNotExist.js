@@ -8,14 +8,12 @@ async function usernameShouldNotExist(req, res, next) {
         username,
       },
     });
-    if (!user.username) {
+    if (!user) {
       next();
     } else
-      response
-        .status(404)
-        .send({
-          message: "Username already exists, please choose another one",
-        });
+      res.status(400).send({
+        message: "Username already exists, please choose another one",
+      });
   } catch (err) {
     res.status(500).send(err);
   }
