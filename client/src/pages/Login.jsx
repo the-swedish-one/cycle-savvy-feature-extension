@@ -2,9 +2,11 @@ import { useState, useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
 import axios from "axios";
 import "./login.css";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [credentials, setCredentials] = useState({
     username: "",
@@ -32,14 +34,10 @@ function Login() {
       auth.login();
       console.log(data.message, data.token);
       setData(data.message);
-      return (
-        <div>
-          <Navigate to="/home" />
-        </div>
-      );
+      navigate("/");
     } catch (error) {
       console.log(error);
-      setData(error.message);
+      setData("Login failed, please try again");
     }
   };
 
@@ -54,7 +52,7 @@ function Login() {
       setData(data.message);
     } catch (error) {
       console.log(error);
-      setData(error.message);
+      setData(error.response.data.message);
     }
   };
 
@@ -62,8 +60,8 @@ function Login() {
     <div>
       <div>
         <h3 className="text-center mt-5">Welcome to Cycle Savvy!</h3>
-        <h4 className="text-center mt-3">Login or sign up here</h4>
-        <div className="d-flex mt-5 justify-content-center">
+        <h4 className="text-center mt-3">Login or sign up</h4>
+        <div className="d-flex mt-4 justify-content-center">
           <input
             value={username}
             onChange={handleChange}
@@ -90,6 +88,9 @@ function Login() {
           <button className=" btn btn-outline-primary" onClick={register}>
             Register
           </button>
+        </div>
+        <div>
+          <h5 className="text-center mt-5">{data}</h5>
         </div>
       </div>
     </div>
