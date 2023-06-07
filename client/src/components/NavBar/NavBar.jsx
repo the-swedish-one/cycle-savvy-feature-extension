@@ -13,11 +13,13 @@ export default function NavBar() {
         <ul className="navbarUL">
           <div className="col">
             <li className="logo">
-              <img
-                src="../CycleSavvyLogoTransparent2.png"
-                alt=""
-                width="200px"
-              />
+              <Link to="/home">
+                <img
+                  src="../CycleSavvyLogoTransparent2.png"
+                  alt=""
+                  width="200px"
+                />
+              </Link>
             </li>
           </div>
           <div className="d-flex ms-auto">
