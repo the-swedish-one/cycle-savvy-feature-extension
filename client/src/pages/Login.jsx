@@ -1,13 +1,14 @@
 import { useState, useContext } from "react";
-// import AuthContext from "../contexts/AuthContext";
+import AuthContext from "../contexts/AuthContext";
 import axios from "axios";
+import "./login.css";
 
 function Login() {
-  // const auth = useContext();
+  const auth = useContext(AuthContext);
 
   const [credentials, setCredentials] = useState({
-    username: "username",
-    password: "password",
+    username: "",
+    password: "",
   });
 
   const [data, setData] = useState(null);
@@ -31,16 +32,15 @@ function Login() {
       auth.login();
       console.log(data.message, data.token);
       setData(data.message);
+      return (
+        <div>
+          <Navigate to="/home" />
+        </div>
+      );
     } catch (error) {
       console.log(error);
       setData(error.message);
     }
-  };
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    auth.logout();
-    setData("You have logged out");
   };
 
   const register = async () => {
@@ -58,63 +58,40 @@ function Login() {
     }
   };
 
-  // const requestData = async () => {
-  //   try {
-  //     const { data } = await axios("/api/auth/profile", {
-  //       headers: {
-  //         authorization: "Bearer " + localStorage.getItem("token"),
-  //       },
-  //     });
-  //     setData(data.message);
-  //     console.log(data.message);
-  //   } catch (error) {
-  //     console.log(error);
-  //     setData(error.message);
-  //   }
-  // };
-
   return (
     <div>
       <div>
-        <input
-          value={username}
-          onChange={handleChange}
-          name="username"
-          type="text"
-          className="form-control mb-2"
-        />
-        <input
-          value={password}
-          onChange={handleChange}
-          name="password"
-          type="password"
-          className="form-control mb-2"
-        />
-        <div className="d-flex gap-2 justify-content-center">
+        <h3 className="text-center mt-5">Welcome to Cycle Savvy!</h3>
+        <h4 className="text-center mt-3">Login or sign up here</h4>
+        <div className="d-flex mt-5 justify-content-center">
+          <input
+            value={username}
+            onChange={handleChange}
+            name="username"
+            type="text"
+            placeholder="username"
+            className="form-control mb-2 w-25"
+          />
+        </div>
+        <div className="d-flex justify-content-center">
+          <input
+            value={password}
+            onChange={handleChange}
+            name="password"
+            type="password"
+            placeholder="password"
+            className="form-control mb-4 w-25"
+          />
+        </div>
+        <div className="d-flex justify-content-center">
           <button className="btn btn-primary" onClick={login}>
             Log in
           </button>
-          <button className="btn btn-outline-dark ml-2" onClick={logout}>
-            Log out
+          <button className=" btn btn-outline-primary" onClick={register}>
+            Register
           </button>
         </div>
       </div>
-      <div className="text-center p-4">
-        <button className=" btn btn-outline-primary" onClick={register}>
-          Register
-        </button>
-      </div>
-      {/* <div className="text-center p-4">
-        <button className=" btn btn-outline-primary" onClick={requestData}>
-          Request protected data
-        </button>
-      </div> */}
-
-      {data && (
-        <div className="text-center p-4">
-          <div className="alert">{data}</div>
-        </div>
-      )}
     </div>
   );
 }
