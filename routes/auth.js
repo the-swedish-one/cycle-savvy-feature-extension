@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var jwt = require("jsonwebtoken");
 var userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn");
+var usernameShouldNotExist = require("../guards/usernameShouldNotExist");
 var db = require("../modelOLD/helper");
 const models = require("../models");
 require("dotenv").config();
@@ -10,7 +11,7 @@ const saltRounds = 10;
 
 const supersecret = process.env.SUPER_SECRET;
 
-router.post("/register", async (req, res) => {
+router.post("/register", usernameShouldNotExist, async (req, res) => {
   const { username, password } = req.body;
 
   try {
