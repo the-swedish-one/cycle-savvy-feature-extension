@@ -9,9 +9,9 @@ async function userShouldExist(req, res, next) {
       },
     });
     console.log(user);
-    if (user.id) {
+    if (user) {
       next();
-    } else response.status(404).send({ message: "User was not found" });
+    } else res.status(404).send({ message: "User was not found" });
   } catch (err) {
     res.status(500).send(err);
   }
